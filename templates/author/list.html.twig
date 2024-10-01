@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Author List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            font-size: 1.2em; /* Larger font size for better readability */
+        }
+
+        th, td {
+            padding: 20px 30px; /* Increased padding for more space */
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            text-align: center; /* Center align header text */
+        }
+
+        tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:last-child {
+            border-bottom: none;
+        }
+
+        td {
+            color: #555;
+            text-align: center; /* Center align body text */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td img {
+            border-radius: 50%;
+        }
+
+        /* Optional: Adjust the table width for smaller screens */
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+            }
+            th, td {
+                white-space: nowrap;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background-color: #3498db;
+            margin: 10px auto 0;
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: normal;
+            font-size: 1.5em;
+            color: #333;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of Authors</h1>
+    <h2>Total authors : {{ authors|length }}</h2>
+
+    {% set total_books = 0 %}
+    {% for author in authors %}
+        {% set total_books = total_books + author.nb_books %}
+    {% endfor %}
+
+    <h2>Total books : {{ total_books }}</h2>
+
+    {% if authors is defined and authors|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Picture</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Number of Books</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set counter = 1 %}
+                {% for author in authors %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td><img src="{{ author.picture }}" alt="{{ author.username }}" width="140" height="140"></td>
+                        <td><strong>{{ author.username|upper }}</strong></td>
+                        <td>{{ author.email }}</td>
+                        <td>{{ author.nb_books }}</td>
+                        <td><a href="{{ path('author_details', { 'id': author.id }) }}">Details</a></td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No authors found.</p>
+    {% endif %}
+</body>
+</html>

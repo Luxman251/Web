@@ -1,0 +1,46 @@
+{# templates/authors/list.html.twig #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Authors List</title>
+        <style>
+            .author-card {
+                border: 1px solid #ccc;
+                padding: 15px;
+                margin: 10px;
+                display: flex;
+                align-items: center;
+            }
+            .author-card img {
+                max-width: 100px;
+                margin-right: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Authors List</h1>
+         {% if authors is empty %}
+          <p>No authors found.</p>
+        <div class="authors">
+             {% else %}
+            {% for author in authors %}
+                <div class="author-card">
+                    <img src="{{ author.picture }}" alt="{{ author.username }}">
+                    <div class="author-details">
+                        <h2>{{ author.username | upper}}</h2>
+                        <p>Email: {{ author.email }}</p>
+                        <p>Number of Books: {{ author.nb_books }}</p>
+                        <a href="{{ path('author_details', {'id': author.id}) }}">détails</a> {# Add "détails" link #}
+                    </div>
+                </div>
+            {% else %}
+                <p>No authors found.</p>
+            {% endfor %}
+            {% endif %}
+            <h1> {{ authors | length }} <h1>
+            {# Display the total number of books #}
+            <h2>Total Number of Books: {{ totalBooks }}</h2>
+        </div>
+    </body>
+</html>
