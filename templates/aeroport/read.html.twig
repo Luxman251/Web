@@ -1,0 +1,22 @@
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Ville</th>
+
+
+
+    </tr>
+
+    {% for aeroport in aeroports %}
+        <tr>
+            <td>{{ aeroport.id }}</td>
+            <td>{{ aeroport.nom }}</td>
+            <td>{{ aeroport.ville }}</td>
+            <td><a href="{{ path('update_Aero', {'id': aeroport.id}) }}">Update</a></td>
+        </tr>
+    {% endfor %}
+
+
+</table>
+            <td><a href="{{ path('app_ajoutAero') }}"> ajout </a></td>
